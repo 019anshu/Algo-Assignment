@@ -1,0 +1,58 @@
+// C program for binary insertion sort
+#include <math.h>
+#include <stdio.h>
+int binarySearch(int a[], int item,
+                 int low, int high)
+{
+    if (high <= low)
+        return (item > a[low]) ? (low + 1) : low;
+    int mid = (low + high) / 2;
+    if (item == a[mid])
+        return mid + 1;
+    if (item > a[mid])
+        return binarySearch(a, item,
+                            mid + 1, high);
+    return binarySearch(a, item, low,
+                        mid - 1);
+}
+void insertionSort(int a[], int n)
+{
+    int i, loc, j, k, selected;
+
+    for (i = 1; i < n; ++i)
+    {
+        j = i - 1;
+        selected = a[i];
+        loc = binarySearch(a, selected, 0, j);
+        while (j >= loc)
+        {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = selected;
+    }
+}
+void display(int a[], int size)
+{
+    int i;
+    for (i=0; i < size; i++)
+        printf("%d\n", a[i]);
+}
+int main()
+{
+    int n;
+    printf("Enter the size:\n");
+    scanf("%d",&n);
+    int a[n];
+    int i;
+    printf("Enter the elements to be sorted:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d",&a[i]);
+    printf("Before sorting,\n");
+    display(a,n);
+    insertionSort(a, n);
+    printf("After Sorting, \n");
+    display(a, n);
+
+    return 0;
+}

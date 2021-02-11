@@ -1,0 +1,57 @@
+Question Link: https://www.programiz.com/dsa/counting-sort
+
+Question: Implement counting sort
+
+Solutuion:
+// Counting sort in C programming
+#include <stdio.h>
+
+void countingSort(int array[], int size) {
+  int output[size];
+  int max = array[0];
+  for (int i = 1; i < size; i++) {
+    if (array[i] > max)
+      max = array[i];
+  }
+  int count[max];
+  for (int i = 0; i <= max; ++i) {
+    count[i] = 0;
+  }
+  for (int i = 0; i < size; i++) {
+    count[array[i]]++;
+  }
+  for (int i = 1; i <= max; i++) {
+    count[i] += count[i - 1];
+  }
+  for (int i = size - 1; i >= 0; i--) {
+    output[count[array[i]] - 1] = array[i];
+    count[array[i]]--;
+  }
+  for (int i = 0; i < size; i++) {
+    array[i] = output[i];
+  }
+}
+void display(int a[], int n)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        printf("%d : %d\n",i, a[i]);
+    }
+}
+int main()
+{
+    int n;
+    printf("Enter the size:\n");
+    scanf("%d",&n);
+    int a[n];
+    int i;
+    printf("Enter the string to be sorted:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d",&a[i]);
+    printf("Before sorting,\n");
+    display(a,n);
+    countingSort(a, n);
+    printf("After Sorting,\n");
+    display(a, n);
+    return 0;
+}
